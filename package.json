@@ -1,6 +1,6 @@
 {
   "name": "google-trends-api-client",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "An fully typed and easy to use client for the google trends api.",
   "author": "UladKasach @uladkasach",
   "license": "MIT",
