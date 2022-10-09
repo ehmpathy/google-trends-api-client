@@ -1,0 +1,28 @@
+{
+  "compilerOptions": {
+    "strict": true,
+    "module": "commonjs",
+    "esModuleInterop": true,
+    "declaration": true,
+    "target": "es2020",
+    "noImplicitAny": true,
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    "lib": [
+      "es2020",
+    ]
+  },
+  "include": [
+    "src/**/*.ts"
+  ],
+  "exclude": [
+    "src/**/*.test.ts",
+    "src/**/*.test.integration.ts",
+    "**/__test_utils__/**/*.ts"
+  ],
+  "atom": {
+    "rewriteTsconfig": false
+  }
+}
