@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.0.1](https://www.github.com/ehmpathy/google-trends-api-client/compare/v1.0.0...v1.0.1) (2022-10-09)
+
+
+### Bug Fixes
+
+* **exports:** export the methods and types ([ab247b1](https://www.github.com/ehmpathy/google-trends-api-client/commit/ab247b1151608d0615681165bc21a4b3fa26d7ba))
+
 ## 1.0.0 (2022-10-09)
 
 
