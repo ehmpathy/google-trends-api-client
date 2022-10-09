@@ -44,6 +44,8 @@ export const getFromApiCallWithoutRequestCaching = async ({
     throwHttpErrors: true,
   });
   await setCookiesFromAxiosResponseIfPossible({ response, cookieCache });
+  if (origin === GOOGLE_TRENDS_API_HOST)
+    return response.body.replace(/^([^{]+)/g, ''); // for somereason, resopnse starts with `)]}',\n`, so delete everything before the first `{`; NOTE: do so here, so if caching, it is saved to cache without this
   return response.body;
 };
 

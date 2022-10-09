@@ -185,7 +185,6 @@ export const getExplorationWidgets = async (
       }),
     },
   });
-  const resultJson = response.replace(/^([^{]+)/g, ''); // for somereason, resopnse starts with `)]}',\n`, so delete everything before the first `{`
-  const result = JSON.parse(resultJson);
+  const result = JSON.parse(response);
   return result as { widgets: GoogleTrendsApiExplorationWidget[] };
 };

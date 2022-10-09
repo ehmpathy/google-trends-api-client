@@ -66,8 +66,7 @@ export const getInterestOverTime = async (
       token: relevantWidget.token,
     },
   });
-  const resultJson = response.replace(/^([^{]+)/g, ''); // for somereason, resopnse starts with `)]}',\n`, so delete everything before the first `{`
-  const result = JSON.parse(resultJson);
+  const result = JSON.parse(response);
   return result.default
     .timelineData as GoogleTrendsApiInterestOverTimeDatapoint[];
 };
