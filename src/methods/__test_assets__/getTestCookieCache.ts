@@ -1,4 +1,5 @@
-import { createCache } from '../../../../simple-on-disk-cache/src/cache';
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { createCache } from 'simple-on-disk-cache';
 
 export const getTestCookieCache = () =>
   createCache({
