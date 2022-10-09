@@ -1,3 +1,4 @@
+import Bottleneck from 'bottleneck';
 import crypto from 'crypto';
 import { gotScraping, OptionsInit, Response } from 'got-scraping';
 import { createUrl } from 'url-fns';
@@ -10,11 +11,16 @@ import { getUserAgentHeadersIfPossible } from '../agent/getUserAgentHeaderIfPoss
 import { useProxyUrlIfPossible } from '../agent/useProxyIfPossible';
 import { AgentOptions, GOOGLE_TRENDS_API_HOST } from '../common';
 
+const bottleneck = new Bottleneck({
+  maxConcurrent: 1, // allow max 1 request at a time
+  minTime: 1000, // wait a min of 1 second
+});
+
 const gotScrapingTyped = gotScraping as (
   options: OptionsInit,
 ) => Promise<Response<string>>;
 
-export const getFromApiCallWithoutRequestCaching = async ({
+export const getFromApiCallWithoutRequestCachingOrRateLimiting = async ({
   origin = GOOGLE_TRENDS_API_HOST,
   path,
   queryParams,
@@ -47,6 +53,14 @@ export const getFromApiCallWithoutRequestCaching = async ({
   if (origin === GOOGLE_TRENDS_API_HOST)
     return response.body.replace(/^([^{]+)/g, ''); // for somereason, resopnse starts with `)]}',\n`, so delete everything before the first `{`; NOTE: do so here, so if caching, it is saved to cache without this
   return response.body;
+};
+
+export const getFromApiCallWithoutRequestCaching = (
+  args: Parameters<typeof getFromApiCallWithoutRequestCachingOrRateLimiting>[0],
+) => {
+  return bottleneck.schedule(() =>
+    getFromApiCallWithoutRequestCachingOrRateLimiting(args),
+  );
 };
 
 export const getFromApiCall = (

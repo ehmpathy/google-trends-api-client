@@ -101,15 +101,19 @@ You should not abuse google's api. It's a privilage that they have exposed it an
 
 To help fulfill valid use cases within the limits of the google api, we can:
 - decrease the number of requests we make
+- decrease the rate of requests we make
 - changing the rate limit that google grants us
 
-Decreasing the number of reqeusts we make can be done by
+Decreasing the number of requests we make can be done by
 - 1. using request caching, to prevent duplicate requests
 
+Decreasing the rate of requests we make can be done by
+- 2. using a semaphore to limit rate of requests, with `delay` and `max-concurrency`
+
 Changing the rate limit that google grants us can be done by
-- 2. changing your ip address with a `proxy` (i.e., reset your rate limit)
-- 3. letting google track your agent across requests with `cookies` (i.e., increase your rate limit)
-- 4. look like your reqeusts came from a real browser with `user-agent` + related headers (i.e., increase your rate limit)
+- 3. changing your ip address with a `proxy` (i.e., reset your rate limit)
+- 4. letting google track your agent across requests with `cookies` (i.e., increase your rate limit)
+- 5. look like your reqeusts came from a real browser with `user-agent` + related headers (i.e., increase your rate limit)
 
 This library makes it easy to do all of the above.
 
@@ -135,7 +139,32 @@ const suggestions = await getAutocompleteSuggestions(
 );
 ```
 
-### 2. changing your ip address, with a proxy
+### 2. using a semaphore, to limit the rate of requests
+
+Google will throttle you if you try to make
+- too many requests per second
+- too many requests in parallel
+
+This library automatically limits
+- requests per second to `1 request / second`
+- request concurrency to `1 request at a time`
+
+You can customize these limits by setting the `semaphoreConfig` on the `agentOptions`
+```ts
+const suggestions = await getAutocompleteSuggestions(
+  {
+    keyword: 'mattress',
+  },
+  {
+    semaphoreConfig: {
+      requestsAtATime: 1, // how many requests can be made concurrently
+      requestsPerSecond: 1, // how many requests can be made each second
+    }
+  },
+);
+```
+
+### 3. changing your ip address, with a proxy
 
 Using a proxy allows you to change the ip address that the origin sees for requests from your agent.
 
@@ -151,7 +180,7 @@ const suggestions = await getAutocompleteSuggestions(
 );
 ```
 
-### 3. letting them track your agent across requests, with cookies
+### 4. letting them track your agent across requests, with cookies
 
 In order to use cross request tracking, you need to enable saving the cookies that the origin tries to assign to you.
 
@@ -174,9 +203,10 @@ const suggestions = await getAutocompleteSuggestions(
 ```
 
 Note:
-- your cache should persist the data to disk, so that it can be used across subsequent invocations of your code._
+- your cache should persist the data to disk, so that it can be used across subsequent invocations of your code.
+- anecdotal evidence shows that you must _first_ call the `getAutocompleteSuggestions` api in order to get cookies without being rate limited, before calling the other apis
 
-### 4. making your requests look like they come from a browser
+### 5. making your requests look like they come from a browser
 
 This library uses [got-scraping](https://github.com/apify/got-scraping) under the hood which takes care of this for us.
 

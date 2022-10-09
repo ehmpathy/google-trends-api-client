@@ -67,6 +67,19 @@ export interface AgentOptions {
    * - https://github.com/uladkasach/simple-on-disk-cache - supports local and s3 caching
    */
   requestCache?: RequestsCache;
+
+  /**
+   * a semaphore is used to limit how often requests are made to the google api
+   *
+   * relevance
+   * - google will throttle you if you make too many requests per second
+   * - google will throttle you if you make too many requests in parallel
+   *
+   * by default, we set
+   * - requestsAtATime: 1
+   * - requestsPerSecond: 1
+   */
+  // semaphoreConfig?: SemaphoreConfig; // TODO: allow customization, when usecase arises; will need to instantiate a `trends` object w/ agentOptions
 }
 
 export interface GoogleTrendsApiTopic {
