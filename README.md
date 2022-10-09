@@ -38,6 +38,11 @@ expect(suggestions.length).toBeGreaterThan(0);
 
 ### get interest over time
 
+Numbers represent search interest relative to the highest point on the chart for the given region and time.
+- A value of 100 is the peak popularity for the term.
+- A value of 50 means that the term is half as popular.
+- A score of 0 means there was not enough data for this term.
+
 ```ts
 const interest = await trends.getInterestOverTime({
   keywords: ['mattress recycling'],
@@ -46,6 +51,16 @@ expect(interest.length).toBeGreaterThan(0);
 ```
 
 ### get related queries
+
+Users searching for your term also searched for these queries.
+You can sort by the following metrics:
+- Top
+  - The most popular search queries.
+  - Scoring is on a relative scale where a value of 100 is the most commonly searched query, 50 is a query searched half as often as the most popular query, and so on.
+- Rising
+  - Queries with the biggest increase in search frequency since the last time period.
+  - Results marked "Breakout" had a tremendous increase, probably because these queries are new and had few (if any) prior searches.
+
 ```ts
 const queries = await trends.getRelatedQueries({
   keywords: ['mattress recycling'],
@@ -55,6 +70,16 @@ expect(queries.rising.length).toBeGreaterThan(0);
 ```
 
 ### get related topics
+
+Users searching for your term also searched for these topics.
+You can view by the following metrics:
+- Top
+  - The most popular topics.
+  - Scoring is on a relative scale where a value of 100 is the most commonly searched topic and a value of 50 is a topic searched half as often as the most popular term, and so on.
+- Rising
+  - Related topics with the biggest increase in search frequency since the last time period.
+  - Results marked "Breakout" had a tremendous increase, probably because these topics are new and had few (if any) prior searches.
+
 ```ts
 const topics = await trends.getRelatedTopics({
   keywords: ['mattress recycling'],

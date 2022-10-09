@@ -20,6 +20,6 @@ describe('getExplorationWidgets', () => {
       },
     );
     expect(data.widgets.length).toBeGreaterThan(0);
-    // console.log(JSON.stringify(data, null, 2));
+    console.log(JSON.stringify(data, null, 2));
   });
 });

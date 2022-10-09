@@ -35,14 +35,10 @@ export interface GoogleTrendsApiInterestOverTimeDatapoint {
 
 /**
  * per google
- * > Users searching for your term also searched for these queries.
- * > You can sort by the following metrics:
- * >  - TOP
- * >    - The most popular search queries.
- * >    - Scoring is on a relative scale where a value of 100 is the most commonly searched query, 50 is a query searched half as often as the most popular query, and so on.
- * >  - RISING
- * >    - Queries with the biggest increase in search frequency since the last time period.
- * >    - Results marked "Breakout" had a tremendous increase, probably because these queries are new and had few (if any) prior searches.
+ * > Numbers represent search interest relative to the highest point on the chart for the given region and time.
+ * > - A value of 100 is the peak popularity for the term.
+ * > - A value of 50 means that the term is half as popular.
+ * > - A score of 0 means there was not enough data for this term.
  */
 export const getInterestOverTime = async (
   ...args: Parameters<typeof getExplorationWidgets>
