@@ -1,5 +1,13 @@
 # Changelog
 
+### [1.0.2](https://www.github.com/ehmpathy/google-trends-api-client/compare/v1.0.1...v1.0.2) (2022-10-09)
+
+
+### Bug Fixes
+
+* **cache:** ensure that requests can be cached in an observable format ([b98587b](https://www.github.com/ehmpathy/google-trends-api-client/commit/b98587b472012887fd15b99a43b5104ae5fc32be))
+* **exports:** expose getFromApiCall and getExplorationWidgets ([5695a8d](https://www.github.com/ehmpathy/google-trends-api-client/commit/5695a8d3dbf03db4d7da1b62fbba104ddfbdf9b0))
+
 ### [1.0.1](https://www.github.com/ehmpathy/google-trends-api-client/compare/v1.0.0...v1.0.1) (2022-10-09)
 
 
